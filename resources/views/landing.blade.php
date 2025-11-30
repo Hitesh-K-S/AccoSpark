@@ -45,16 +45,16 @@
 <body class="min-h-screen">
 
     <!-- Header / Navigation -->
-    <header class="bg-comic-red sticky top-0 z-10 shadow-comic-pop-md">
+    <header class="bg-comic-red sticky top-0 z-20 shadow-comic-pop-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center comic-frame border-t-0 border-x-0">
             <h1 class="text-3xl font-extrabold text-white tracking-widest leading-none">
-                <span class="bg-comic-dark px-2 pb-1 pt-0.5 rounded-md shadow-lg mr-1 transform -rotate-2 inline-block">A.I.</span>
-                COACH
+                <!-- <span class="bg-comic-dark px-2 pb-1 pt-0.5 rounded-md shadow-lg mr-1 transform -rotate-2 inline-block">A.I.</span> -->
+                AccoSpark
             </h1>
             <nav class="hidden md:flex space-x-6 font-bold text-white">
                 <a href="#features" class="hover:text-comic-dark transition duration-150">Features</a>
                 <a href="#howitworks" class="hover:text-comic-dark transition duration-150">How It Works</a>
-                <a href="#pricing" class="hover:text-comic-dark transition duration-150">Pricing</a>
+                <a href="#pricing" class="hover:text-comic-dark transition duration-150">Testimonials</a>
             </nav>
             <a href="#" class="md:hidden text-white text-xl font-bold">Menu</a>
         </div>
@@ -81,8 +81,8 @@
         </section>
 
         <!-- Features -->
-        <section id="features" class="py-12">
-            <h3 class="text-4xl font-black text-center mb-16 uppercase relative">
+        <section id="features" class="py-12 mt-10">
+            <h3 class="text-4xl font-black text-center mb-16 uppercase relative t">
                 <span class="relative z-10 bg-comic-page px-4 pb-1">Your New Superpowers</span>
                 <span class="absolute w-full h-2 bg-comic-pink bottom-0 left-0 transform -translate-y-1/2 z-0"></span>
             </h3>
@@ -124,9 +124,9 @@
                     <p class="text-gray-300">Tell the AI what you want to conquer. A book? A marathon? World domination?</p>
                 </div>
 
-                <div class="hidden md:flex items-center justify-center">
+                <!-- <div class="hidden md:flex items-center justify-center">
                     <svg class="w-8 h-8 text-comic-yellow rotate-90 md:rotate-0 comic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-                </div>
+                </div> -->
 
                 <div class="flex flex-col items-center text-center p-4">
                     <div class="w-12 h-12 md:w-20 md:h-20 bg-comic-red text-3xl md:text-5xl font-black rounded-full flex items-center justify-center mb-4 shadow-xl border-4 border-comic-yellow">2</div>
@@ -134,9 +134,9 @@
                     <p class="text-gray-300">The AI attacks procrastination with customized reminders and progress checks. Fight back!</p>
                 </div>
 
-                <div class="hidden md:flex items-center justify-center">
+                <!-- <div class="hidden md:flex items-center justify-center">
                     <svg class="w-8 h-8 text-comic-yellow rotate-90 md:rotate-0 comic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-                </div>
+                </div> -->
 
                 <div class="flex flex-col items-center text-center p-4">
                     <div class="w-12 h-12 md:w-20 md:h-20 bg-comic-blue text-3xl md:text-5xl font-black rounded-full flex items-center justify-center mb-4 shadow-xl border-4 border-comic-yellow">3</div>
@@ -170,7 +170,7 @@
 
     <footer class="bg-comic-dark text-white mt-12 py-8 comic-frame border-b-0 border-x-0">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:flex justify-between items-center">
-            <p class="text-lg font-bold mb-4 md:mb-0">&copy; 2025 A.I. COACH. All Rights Reserved. POWERED BY PIXELS.</p>
+            <p class="text-lg font-bold mb-4 md:mb-0">&copy; 2025 All Rights Reserved.</p>
             <div class="flex justify-center space-x-6">
                 <a href="#" class="text-comic-yellow hover:text-white transition duration-150 font-bold">Privacy</a>
                 <a href="#" class="text-comic-yellow hover:text-white transition duration-150 font-bold">Terms</a>
