@@ -26,6 +26,16 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
+        // After authenticate(), the user is logged in. Let's check ban status.
+        $user = Auth::user();
+        if ($user->banned_at !== null) {
+            Auth::logout();
+
+            return back()->withErrors([
+                'email' => 'Your account has been banned.'
+            ]);
+        }
+
         $request->session()->regenerate();
 
         return redirect()->intended(route('dashboard', absolute: false));
