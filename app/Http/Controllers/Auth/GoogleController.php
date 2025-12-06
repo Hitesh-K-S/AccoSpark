@@ -22,14 +22,26 @@ class GoogleController extends Controller
             return redirect('/login')->withErrors(['google' => 'Google login failed.']);
         }
 
-        $user = User::updateOrCreate(
-            ['email' => $googleUser->getEmail()],
-            [
-                'name' => $googleUser->getName(),
-                'password' => bcrypt(str()->random(16)),
-            ]
-        );
+        // Match user by email FIRST (this is critical)
+        $user = User::where('email', $googleUser->getEmail())->first();
 
+        // If user exists → check ban
+        if ($user && $user->banned_at !== null) {
+            return redirect('/login')->withErrors([
+                'email' => 'Your account has been banned.'
+            ]);
+        }
+
+        // If no existing user → create a new one
+        if (! $user) {
+            $user = User::create([
+                'name' => $googleUser->getName(),
+                'email' => $googleUser->getEmail(),
+                'password' => bcrypt(str()->random(16)),
+            ]);
+        }
+
+        // Now safe to login (user is not banned)
         Auth::login($user);
 
         return redirect('/dashboard');
