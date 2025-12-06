@@ -24,6 +24,8 @@ Route::middleware('auth')->group(function () {
 Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('google.login');
 Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
 
+
+
   //****************//
  //      ADMIN     //
 //****************//
@@ -37,10 +39,8 @@ Route::prefix('overwatch')->name('overwatch.')->group(function () {
     Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::get('dashboard', [OverwatchDashboardController::class, 'index'])->name('dashboard');
 
-        // Users (privacy-friendly: only metadata + actions)
         Route::get('users', [AdminUserController::class, 'index'])->name('users.index');
-        Route::post('users/{user}/toggle', [AdminUserController::class, 'toggleActive'])->name('users.toggle');
-        Route::post('users/{user}/reset-password', [AdminUserController::class, 'resetPassword'])->name('users.reset_password');
+        Route::post('users/{user}/toggle-ban', [AdminUserController::class, 'toggleBan'])->name('users.toggleBan');
     });
 });
 
