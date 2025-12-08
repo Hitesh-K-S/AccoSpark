@@ -6,6 +6,8 @@ use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Overwatch\AdminAuthController;
 use App\Http\Controllers\Overwatch\OverwatchDashboardController;
 use App\Http\Controllers\Overwatch\AdminUserController;
+use App\Http\Controllers\Overwatch\AIPersonaController;
+
 
 Route::get('/', function () {
     return view('landing');
@@ -37,10 +39,25 @@ Route::prefix('overwatch')->name('overwatch.')->group(function () {
 
     // Protected admin routes
     Route::middleware(['auth', 'is_admin'])->group(function () {
+        // Persona Manager
         Route::get('dashboard', [OverwatchDashboardController::class, 'index'])->name('dashboard');
 
         Route::get('users', [AdminUserController::class, 'index'])->name('users.index');
         Route::post('users/{user}/toggle-ban', [AdminUserController::class, 'toggleBan'])->name('users.toggleBan');
+    
+         // AI Persona Manager
+        Route::get('personas', [AIPersonaController::class, 'index'])->name('personas.index');
+
+        Route::get('personas/create', [AIPersonaController::class, 'create'])->name('personas.create');
+        Route::post('personas', [AIPersonaController::class, 'store'])->name('personas.store');
+
+        Route::get('personas/{persona}/edit', [AIPersonaController::class, 'edit'])->name('personas.edit');
+        Route::put('personas/{persona}', [AIPersonaController::class, 'update'])->name('personas.update');
+
+        Route::post('personas/{persona}/toggle', [AIPersonaController::class, 'toggle'])->name('personas.toggle');
+
+        Route::delete('personas/{persona}', [AIPersonaController::class, 'destroy'])->name('personas.destroy');
+    
     });
 });
 
