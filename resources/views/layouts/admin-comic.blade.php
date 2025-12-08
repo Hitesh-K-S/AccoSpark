@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Overwatch Admin - AccoSpark</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 </head>
 
 <body class="min-h-screen bg-comic-page">
@@ -25,6 +27,9 @@
 
                 <a href="{{ route('overwatch.users.index') }}" 
                    class="hover:text-comic-yellow transition">Users</a>
+
+                <a href="{{ route('overwatch.personas.index') }}" 
+                   class="hover:text-comic-yellow transition">Personas</a>
 
                 <form method="POST" action="{{ route('overwatch.logout') }}">
                     @csrf
