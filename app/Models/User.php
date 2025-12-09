@@ -45,4 +45,16 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+    public function googleToken()
+    {
+        return $this->hasOne(\App\Models\GoogleToken::class);
+    }
+
+    public function persona()
+    {
+        return $this->belongsTo(\App\Models\AIPersona::class);
+    }
+
 }

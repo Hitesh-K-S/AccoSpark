@@ -8,6 +8,7 @@ use App\Http\Controllers\Overwatch\OverwatchDashboardController;
 use App\Http\Controllers\Overwatch\AdminUserController;
 use App\Http\Controllers\Overwatch\AIPersonaController;
 use App\Http\Controllers\GoalController;
+use App\Http\Controllers\GoogleCalendarController;
 
 
 Route::get('/', function () {
@@ -19,15 +20,32 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    // User Profile
+
+     // User Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Persona selection
+    Route::post('/profile/persona', [ProfileController::class, 'updatePersona'])
+        ->name('profile.persona.update');
 
     // Goal setting
     Route::get('/goals', [GoalController::class, 'index'])->name('goals.index');
     Route::get('/goals/create', [GoalController::class, 'create'])->name('goals.create');
     Route::post('/goals', [GoalController::class, 'store'])->name('goals.store');
+
+    // Calendar connect
+    Route::get('/calendar/connect', [GoogleCalendarController::class, 'connect'])
+        ->name('calendar.connect');
+
+    // OAuth callback
+    Route::get('/calendar/callback', [GoogleCalendarController::class, 'callback'])
+        ->name('calendar.callback');
+
+    // Disconnect calendar
+    Route::post('/calendar/disconnect', [GoogleCalendarController::class, 'disconnect'])
+        ->name('calendar.disconnect');
 });
 
 Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('google.login');

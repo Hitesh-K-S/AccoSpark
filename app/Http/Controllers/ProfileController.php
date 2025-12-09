@@ -18,6 +18,7 @@ class ProfileController extends Controller
     {
         return view('profile.edit', [
             'user' => $request->user(),
+            'personas' => \App\Models\AIPersona::where('is_active', true)->get(),
         ]);
     }
 
@@ -57,4 +58,18 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function updatePersona(Request $request)
+    {
+        $request->validate([
+            'persona_id' => 'required|exists:ai_personas,id'
+        ]);
+
+        $user = $request->user();
+        $user->persona_id = $request->persona_id;
+        $user->save();
+
+        return back()->with('status', 'persona-updated');
+    }
+
 }
