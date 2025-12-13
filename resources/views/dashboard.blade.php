@@ -27,6 +27,54 @@
         </div>
     </div>
 
+    {{-- DAILY CHECK-IN STATUS --}}
+    <div class="mb-10">
+
+        @if(!$todayCheckin)
+            {{-- NOT CHECKED IN --}}
+            <div class="bg-comic-red text-white p-6 rounded-2xl comic-frame shadow-comic-pop-lg">
+                <h2 class="text-3xl font-black mb-2">⏰ CHECK-IN MISSING</h2>
+                <p class="font-bold text-lg mb-4">
+                    No report from you today.  
+                    Takes 30 seconds. Do it now.
+                </p>
+
+                <a href="{{ route('checkin.create') }}"
+                class="comic-btn bg-white text-comic-dark px-6 py-3 rounded-lg shadow-comic-button text-xl inline-block">
+                    DO DAILY CHECK-IN
+                </a>
+
+
+            </div>
+
+        @elseif($todayCheckin->checkin_type === 'submitted')
+            {{-- CHECKED IN --}}
+            <div class="bg-comic-green text-white p-6 rounded-2xl comic-frame shadow-comic-pop-md">
+                <h2 class="text-3xl font-black mb-2">✅ CHECK-IN COMPLETE</h2>
+                <p class="font-bold text-lg">
+                    You reported today.  
+                    AI will review this later.
+                </p>
+            </div>
+
+        @else
+            {{-- AUTO MISSED (rare but important) --}}
+            <div class="bg-comic-yellow text-comic-dark p-6 rounded-2xl comic-frame shadow-comic-pop-md">
+                <h2 class="text-3xl font-black mb-2">⚠️ NO CHECK-IN RECORDED</h2>
+                <p class="font-bold text-lg">
+                    Today passed without a report.  
+                    Tomorrow is a clean slate.
+                </p>
+            </div>
+        @endif
+        <a href="{{ route('checkins.history') }}"
+           class="font-bold underline">
+            View Check-In History
+        </a>
+
+    </div>
+
+
     <!-- Today's Mission -->
     <div class="bg-comic-yellow p-8 rounded-2xl comic-frame shadow-comic-pop-lg mb-10 rotate-[-1deg]">
         <h2 class="text-3xl font-black text-comic-dark mb-4">🚀 TODAY'S MISSION</h2>

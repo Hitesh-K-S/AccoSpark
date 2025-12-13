@@ -1,13 +1,24 @@
 <?php
+
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DailyCheckin extends Model
 {
-    protected $casts = [
-        'tasks_completed' => 'array',
-        'ai_feedback' => 'array',
-        'date' => 'date',
+    protected $fillable = [
+        'user_id',
+        'date',
+        'checkin_type',
+        'summary_text',
+        'energy_level',
+        'mood_level',
+        'self_reported_done',
     ];
-    protected $fillable = ['user_id','date','tasks_completed','offline_notes','ai_feedback'];
+
+    protected $casts = [
+        'date' => 'date',
+        'self_reported_done' => 'boolean',
+    ];
 }

@@ -57,4 +57,10 @@ class User extends Authenticatable
         return $this->belongsTo(\App\Models\AIPersona::class);
     }
 
+
+    public function dailyCheckins()
+    {
+        return $this->hasMany(\App\Models\DailyCheckin::class);
+    }
+
 }
