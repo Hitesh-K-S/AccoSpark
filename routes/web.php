@@ -52,10 +52,6 @@ Route::middleware('auth')->group(function () {
         ->name('calendar.disconnect');
 
     //Daily Checkins
-    Route::get('/checkin', function () {
-    return view('checkins.daily');
-    })->middleware('auth')->name('checkin.daily');
-
     Route::get('/checkin', [DailyCheckinController::class, 'create'])
         ->name('checkin.create');
 
