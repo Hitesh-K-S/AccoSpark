@@ -61,6 +61,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkins/history', [DailyCheckinController::class, 'history'])
         ->name('checkins.history');
 
+    Route::post('/tasks/{task}/complete', [TaskController::class, 'complete'])
+        ->name('tasks.complete');
+
+
 });
 
 Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('google.login');
