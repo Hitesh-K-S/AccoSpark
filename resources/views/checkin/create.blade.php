@@ -26,7 +26,11 @@
                     class="w-full mt-2 p-3 rounded comic-input text-black"
                     rows="4"
                     placeholder="No judgment. Just facts."
+                    maxlength="5000"
                 ></textarea>
+                @error('summary_text')
+                    <p class="text-red-200 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Sliders -->
