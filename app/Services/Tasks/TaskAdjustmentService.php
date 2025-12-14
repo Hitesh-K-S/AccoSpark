@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Services\Tasks;
+
+use App\Models\Task;
+use Carbon\Carbon;
+
+class TaskAdjustmentService
+{
+    public function apply(int $userId, array $plan): void
+    {
+        $today = Carbon::today();
+
+        // 1️⃣ Reschedule pending tasks if required
+        if ($plan['reschedule_tasks']) {
+            Task::where('user_id', $userId)
+                ->where('status', 'pending')
+                ->whereDate('due_date', '<=', $today)
+                ->update([
+                    'due_date' => $today->addDay(),
+                ]);
+        }
+
+        // 2️⃣ Reduce workload for upcoming tasks
+        if ($plan['reduce_workload']) {
+            $this->reduceFutureLoad($userId, $plan['workload_multiplier']);
+        }
+
+        // 3️⃣ Freeze system-generated tasks
+        if ($plan['freeze_new_tasks']) {
+            $this->freezeSystemTasks($userId);
+        }
+    }
+
+    protected function reduceFutureLoad(int $userId, int $multiplier): void
+    {
+        $tasks = Task::where('user_id', $userId)
+            ->where('status', 'pending')
+            ->whereDate('due_date', '>', now())
+            ->get();
+
+        foreach ($tasks as $task) {
+            $task->estimated_minutes = max(
+                5,
+                intval($task->estimated_minutes * ($multiplier / 100))
+            );
+            $task->save();
+        }
+    }
+
+    protected function freezeSystemTasks(int $userId): void
+    {
+        Task::where('user_id', $userId)
+            ->where('is_system_generated', true)
+            ->where('status', 'pending')
+            ->update([
+                'status' => 'paused',
+            ]);
+    }
+}
+
