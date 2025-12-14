@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DailyCheckin;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Services\Checkin\CheckinTimeContextService;
 
 class DailyCheckinController extends Controller
 {
@@ -50,15 +51,21 @@ class DailyCheckinController extends Controller
             'mood_level' => ['nullable', 'integer', 'between:1,5'],
         ]);
 
+        $context = app(CheckinTimeContextService::class)
+            ->build($user->id, $today);
 
-        // Atomic write (NO race conditions)
         DailyCheckin::firstOrCreate(
             [
                 'user_id' => $user->id,
                 'date' => $today,
             ],
             array_merge(
-                ['checkin_type' => 'submitted'],
+                [
+                    'checkin_type' => 'submitted',
+                    'planned_minutes' => $context['planned_minutes'],
+                    'completed_minutes' => $context['completed_minutes'],
+                    'completion_ratio' => $context['completion_ratio'],
+                ],
                 $validated
             )
         );

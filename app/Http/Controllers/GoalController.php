@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Goal;
 use Illuminate\Http\Request;
+use App\Services\AI\GoalAIPlannerService;
+
+
 
 class GoalController extends Controller
 {
@@ -19,7 +22,7 @@ class GoalController extends Controller
         return view('goals.create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request, GoalAIPlannerService $planner)
     {
         $validated = $request->validate([
             'title' => 'required|max:255',
@@ -27,13 +30,22 @@ class GoalController extends Controller
             'target_date' => 'nullable|date',
         ]);
 
-        Goal::create([
-            'user_id'      => auth()->id(),
-            'title'        => $validated['title'],
-            'description'  => $validated['description'] ?? null,
-            'target_date'  => $validated['target_date'] ?? null,
+        $goal = Goal::create([
+            'user_id'     => auth()->id(),
+            'title'       => $validated['title'],
+            'description' => $validated['description'] ?? null,
+            'target_date' => $validated['target_date'] ?? null,
         ]);
 
-        return redirect()->route('goals.index')->with('success', 'Goal created!');
+        //  Generate roadmap
+        $roadmap = $planner->generateRoadmap($goal);
+
+        $goal->ai_plan = $roadmap;
+        $goal->save();
+
+        return redirect()
+            ->route('goals.index')
+            ->with('success', 'Goal created with AI roadmap!');
     }
+
 }
