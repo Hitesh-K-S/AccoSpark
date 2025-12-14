@@ -9,6 +9,9 @@ class Kernel extends ConsoleKernel
 {
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('checkins:auto-miss')->dailyAt('23:59');
+        $schedule->command('checkins:auto-miss', [
+            '--date' => now()->subDay()->toDateString(),
+        ])->dailyAt('00:05');
+
     }
 }

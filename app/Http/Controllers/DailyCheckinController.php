@@ -26,24 +26,32 @@ class DailyCheckinController extends Controller
         $user = $request->user();
         $today = Carbon::today();
 
-        // prevent double submission
-        if (DailyCheckin::where('user_id', $user->id)->where('date', $today)->exists()) {
-            return redirect()->route('dashboard');
-        }
-
-        DailyCheckin::create([
-            'user_id' => $user->id,
-            'date' => $today,
-            'checkin_type' => 'submitted',
-            'summary_text' => $request->summary_text,
-            'energy_level' => $request->energy_level,
-            'mood_level' => $request->mood_level,
-            'self_reported_done' => $request->self_reported_done,
+        // Validate inputs (protect DB + AI)
+        $validated = $request->validate([
+            'summary_text' => ['nullable', 'string', 'max:5000'],
+            'energy_level' => ['nullable', 'integer', 'between:1,5'],
+            'mood_level' => ['nullable', 'integer', 'between:1,5'],
+            'self_reported_done' => ['nullable', 'boolean'],
         ]);
 
-        return redirect()->route('dashboard')
-            ->with('success', 'Check-in submitted 🧠');
+        // Atomic write (NO race conditions)
+        DailyCheckin::firstOrCreate(
+            [
+                'user_id' => $user->id,
+                'date' => $today,
+            ],
+            array_merge(
+                ['checkin_type' => 'submitted'],
+                $validated
+            )
+        );
+
+        // Redirect safely
+        return redirect()
+            ->route('dashboard')
+            ->with('success', 'Check-in submitted successfully!');
     }
+
 
 
     public function history(Request $request)
