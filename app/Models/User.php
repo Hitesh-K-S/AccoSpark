@@ -65,9 +65,4 @@ class User extends Authenticatable
         return $this->hasMany(\App\Models\DailyCheckin::class);
     }
 
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
 }

@@ -21,4 +21,9 @@ class DailyCheckin extends Model
         'date' => 'date',
         'self_reported_done' => 'boolean',
     ];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }
