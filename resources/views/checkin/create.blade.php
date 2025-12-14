@@ -3,12 +3,6 @@
 @section('content')
 <div class="max-w-3xl mx-auto px-4 py-12">
 
-    <!-- Header -->
-    <!-- <div class="bg-comic-pink text-white p-8 rounded-2xl comic-frame shadow-comic-pop-lg mb-10 text-center">
-        <h1 class="text-4xl font-black mb-2">🕘 DAILY CHECK-IN</h1>
-        <p class="text-xl font-bold">Be honest. That’s the only rule.</p>
-    </div> -->
-
     
     <div class="bg-comic-blue text-white p-8 rounded-2xl comic-frame shadow-comic-pop-lg">
 
