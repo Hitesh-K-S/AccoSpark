@@ -15,6 +15,7 @@ class Task extends Model
         'google_event_id',
         'ai_generated',
         'completed_at',
+        'estimated_minutes',
     ];
 
     protected $casts = [

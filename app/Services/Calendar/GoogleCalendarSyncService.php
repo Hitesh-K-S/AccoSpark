@@ -204,4 +204,35 @@ class GoogleCalendarSyncService
             "— AccoSpark",
         ]);
     }
+
+    public function syncDay(int $userId, Carbon $date)
+    {
+        $personaTone = auth()->user()->persona->tone ?? 'friendly';
+
+        $planner = app(TaskTimePlannerService::class);
+        $events  = app(CalendarEventBuilder::class);
+
+        $plannedTasks = $planner->planForDate($userId, $date);
+
+        foreach ($plannedTasks as $item) {
+            $task = $item['task'];
+
+            if ($task->google_event_id) {
+                continue; // already synced
+            }
+
+            $eventData = $events->build(
+                $task,
+                $item['duration'],
+                $personaTone
+            );
+
+            $googleEventId = $this->createGoogleEvent($eventData);
+
+            $task->update([
+                'google_event_id' => $googleEventId,
+            ]);
+        }
+    }
+
 }

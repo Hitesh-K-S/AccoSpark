@@ -12,5 +12,11 @@ class Goal extends Model
         'description',
         'target_date',
         'status',
+        'ai_plan',
+    ];
+
+    protected $casts = [
+        'ai_plan' => 'array',
+        'target_date' => 'date',
     ];
 }

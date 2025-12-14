@@ -9,24 +9,22 @@ class TaskAdjustmentService
 {
     public function apply(int $userId, array $plan): void
     {
-        $today = Carbon::today();
-
-        // 1️⃣ Reschedule pending tasks if required
+        // Reschedule overdue tasks
         if ($plan['reschedule_tasks']) {
             Task::where('user_id', $userId)
                 ->where('status', 'pending')
-                ->whereDate('due_date', '<=', $today)
+                ->whereDate('due_date', '<', Carbon::today())
                 ->update([
-                    'due_date' => $today->addDay(),
+                    'due_date' => Carbon::today()->addDay(),
                 ]);
         }
 
-        // 2️⃣ Reduce workload for upcoming tasks
+        // Reduce workload for upcoming tasks
         if ($plan['reduce_workload']) {
             $this->reduceFutureLoad($userId, $plan['workload_multiplier']);
         }
 
-        // 3️⃣ Freeze system-generated tasks
+        // Freeze system-generated tasks
         if ($plan['freeze_new_tasks']) {
             $this->freezeSystemTasks($userId);
         }
@@ -34,18 +32,20 @@ class TaskAdjustmentService
 
     protected function reduceFutureLoad(int $userId, int $multiplier): void
     {
-        $tasks = Task::where('user_id', $userId)
+        Task::where('user_id', $userId)
             ->where('status', 'pending')
-            ->whereDate('due_date', '>', now())
-            ->get();
+            ->whereDate('due_date', '>', Carbon::today())
+            ->each(function ($task) use ($multiplier) {
+                if (!isset($task->estimated_minutes)) {
+                    return;
+                }
 
-        foreach ($tasks as $task) {
-            $task->estimated_minutes = max(
-                5,
-                intval($task->estimated_minutes * ($multiplier / 100))
-            );
-            $task->save();
-        }
+                $task->estimated_minutes = max(
+                    5,
+                    intval($task->estimated_minutes * ($multiplier / 100))
+                );
+                $task->save();
+            });
     }
 
     protected function freezeSystemTasks(int $userId): void
@@ -58,4 +58,3 @@ class TaskAdjustmentService
             ]);
     }
 }
-
