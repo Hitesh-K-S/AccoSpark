@@ -86,10 +86,13 @@ class GoogleCalendarSyncService
     {
         $start = $this->startTime($task);
         $end   = $this->endTime($task);
+        
+        $persona = $task->goal->persona;    
+        $wording = app(\App\Services\Persona\PersonaWordingService::class);
 
         $event = new Event([
-            'summary' => "🎯 [AccoSpark] {$task->title}",
-            'description' => $this->description($task),
+            'summary' => $wording->calendarTitle($task, $persona),
+            'description' => $wording->calendarDescription($task, $persona),
             'start' => [
                 'dateTime' => $start->toRfc3339String(),
             ],
