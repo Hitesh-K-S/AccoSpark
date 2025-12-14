@@ -6,6 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 
 class User extends Authenticatable
 {
@@ -55,6 +57,12 @@ class User extends Authenticatable
     public function persona()
     {
         return $this->belongsTo(\App\Models\AIPersona::class);
+    }
+
+
+    public function dailyCheckins()
+    {
+        return $this->hasMany(\App\Models\DailyCheckin::class);
     }
 
 }

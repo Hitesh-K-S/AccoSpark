@@ -9,15 +9,19 @@ use App\Http\Controllers\Overwatch\AdminUserController;
 use App\Http\Controllers\Overwatch\AIPersonaController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\GoogleCalendarController;
-
+use App\Http\Controllers\DailyCheckinController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('landing');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
 
@@ -46,6 +50,17 @@ Route::middleware('auth')->group(function () {
     // Disconnect calendar
     Route::post('/calendar/disconnect', [GoogleCalendarController::class, 'disconnect'])
         ->name('calendar.disconnect');
+
+    //Daily Checkins
+    Route::get('/checkin', [DailyCheckinController::class, 'create'])
+        ->name('checkin.create');
+
+    Route::post('/checkin', [DailyCheckinController::class, 'store'])
+        ->name('checkin.store');
+
+    Route::get('/checkins/history', [DailyCheckinController::class, 'history'])
+        ->name('checkins.history');
+
 });
 
 Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('google.login');
