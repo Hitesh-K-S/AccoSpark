@@ -65,4 +65,9 @@ class User extends Authenticatable
         return $this->hasMany(\App\Models\DailyCheckin::class);
     }
 
+    public function tasks()
+    {
+        return $this->hasMany(\App\Models\Task::class);
+    }
+
 }
