@@ -61,14 +61,6 @@ AccoSpark treats missed tasks as **data**, not failure.
 - **Blade + Tailwind CSS** – UI & UX
 - **MySQL** – Persistent data storage
 
-### ⚙️ Orchestration Layer
-- **Kestra**
-  - Scheduled & event-driven workflows
-  - Nightly progress evaluation
-  - Missed-task detection
-  - Recovery strategy decisions
-  - Calls backend via HTTP/DB plugins
-
 ### 🔌 Integrations
 - **Google OAuth** – User authentication
 - **Google Calendar API**
@@ -99,7 +91,6 @@ AccoSpark treats missed tasks as **data**, not failure.
 - ❌ No guilt-based reminders
 - ✅ Calendar as the notification layer
 - ✅ Recovery > punishment
-- ✅ Orchestration separated from core app
 - ✅ Persona stability + adaptive intensity
 
 ---
@@ -112,7 +103,6 @@ AccoSpark treats missed tasks as **data**, not failure.
 - MySQL
 - Google OAuth
 - Google Calendar API
-- Kestra (workflow orchestration)
 - AI (task planning & feedback)
 
 ---
@@ -124,7 +114,6 @@ AccoSpark treats missed tasks as **data**, not failure.
 - ✅ Daily Check-In system
 - ✅ Recovery classification & planning
 - ✅ Persona management (admin)
-- 🔄 AI + Kestra deep integration (in progress)
 
 ---
 
