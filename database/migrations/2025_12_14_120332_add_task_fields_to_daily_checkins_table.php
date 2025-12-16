@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::table('daily_checkins', function (Blueprint $table) {
 
-            // Task-level truth (AI + Kestra need this)
+            // Task-level truth (AI and recovery logic need this)
             $table->json('completed_task_ids')->nullable()->after('checkin_type');
             $table->json('skipped_task_ids')->nullable()->after('completed_task_ids');
 
