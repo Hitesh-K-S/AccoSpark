@@ -30,6 +30,13 @@
             <input type="date" name="target_date"
                 class="comic-input w-full p-3 rounded mb-6">
 
+            <!-- Goal Details (Free-form) -->
+            <label class="block font-black text-xl mb-2">Goal Details <span class="text-sm font-normal text-gray-600">(Optional - helps AI generate better tasks)</span></label>
+            <textarea name="goal_details" rows="4"
+                class="comic-input w-full p-3 rounded mb-6"
+                placeholder="Example: I want to study DSA consistently for the next 30 days. I can give 1 hour per day."></textarea>
+            <p class="text-sm text-gray-600 mb-6">Provide additional context about your goal, timeline, and available time. This helps our AI create more accurate daily tasks.</p>
+
             <button class="comic-btn bg-comic-red text-white text-xl px-8 py-3 rounded-lg shadow-comic-button hover:bg-red-500">
                 CREATE GOAL
             </button>

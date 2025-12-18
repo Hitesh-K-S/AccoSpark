@@ -22,17 +22,38 @@
         <div class="grid md:grid-cols-2 gap-8">
 
             @foreach($goals as $goal)
-                <div class="bg-white p-6 rounded-xl comic-frame shadow-comic-pop-md">
-                    <h3 class="text-2xl font-black mb-3">{{ $goal->title }}</h3>
+                <a href="{{ route('goals.show', $goal) }}" 
+                   class="goal-card bg-white p-6 rounded-xl comic-frame shadow-comic-pop-md transition-all duration-200 hover:shadow-comic-pop-lg hover:-translate-y-1 cursor-pointer block group relative overflow-hidden">
+                    @if($goal->ai_plan && isset($goal->ai_plan['tasks']))
+                        <div class="absolute top-2 right-2 w-3 h-3 bg-comic-green rounded-full comic-frame animate-pulse"></div>
+                    @endif
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-2xl font-black group-hover:text-comic-blue transition-colors">{{ $goal->title }}</h3>
+                    </div>
                     <p class="text-gray-700 mb-3">{{ $goal->description }}</p>
 
-                    <div class="font-bold">
-                        Target:
-                        <span class="text-comic-blue">
-                            {{ $goal->target_date ?? 'No deadline' }}
-                        </span>
+                    <div class="flex justify-between items-center">
+                        <div class="font-bold">
+                            Target:
+                            <span class="text-comic-blue">
+                                {{ $goal->target_date ? $goal->target_date->format('M d, Y') : 'No deadline' }}
+                            </span>
+                        </div>
+                        @if($goal->tasks_count > 0)
+                            <span class="bg-comic-green text-white px-3 py-1 rounded-full text-sm font-bold comic-frame group-hover:scale-110 transition-transform inline-block">
+                                {{ $goal->tasks_count }} events
+                            </span>
+                        @elseif($goal->ai_plan && isset($goal->ai_plan['tasks']))
+                            <span class="bg-comic-blue text-white px-3 py-1 rounded-full text-sm font-bold comic-frame group-hover:scale-110 transition-transform inline-block">
+                                View Plan →
+                            </span>
+                        @else
+                            <span class="bg-comic-yellow text-comic-dark px-3 py-1 rounded-full text-sm font-bold comic-frame group-hover:scale-110 transition-transform inline-block">
+                                Generating...
+                            </span>
+                        @endif
                     </div>
-                </div>
+                </a>
             @endforeach
 
         </div>
