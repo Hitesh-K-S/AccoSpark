@@ -13,9 +13,12 @@ class Task extends Model
         'status',
         'type',
         'google_event_id',
+        'calendar_event_id',
+        'calendar_synced',
         'ai_generated',
         'completed_at',
         'estimated_minutes',
+        'frequency_per_week',
     ];
 
     protected $casts = [
@@ -33,5 +36,13 @@ class Task extends Model
         ]);
 
         return back()->with('success', 'Task completed successfully.');
+    }
+
+    /**
+     * Get the goal that owns the task
+     */
+    public function goal()
+    {
+        return $this->belongsTo(Goal::class);
     }
 }

@@ -19,4 +19,20 @@ class Goal extends Model
         'ai_plan' => 'array',
         'target_date' => 'date',
     ];
+
+    /**
+     * Get the tasks for the goal
+     */
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
+    /**
+     * Get the user that owns the goal
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

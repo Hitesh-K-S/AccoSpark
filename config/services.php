@@ -41,5 +41,11 @@ return [
         'redirect' => env('GOOGLE_REDIRECT_URI'),
     ],
 
+    'openrouter' => [
+        'api_key' => env('OPENROUTER_API_KEY'),
+        'base_url' => env('OPENROUTER_BASE_URL', 'https://openrouter.ai/api/v1'),
+        // Default to Mistral free tier; override via OPENROUTER_MODEL if needed
+        'model' => env('OPENROUTER_MODEL', 'mistralai/mistral-7b-instruct:free'),
+    ],
 
 ];

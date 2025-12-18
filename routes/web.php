@@ -38,6 +38,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/goals', [GoalController::class, 'index'])->name('goals.index');
     Route::get('/goals/create', [GoalController::class, 'create'])->name('goals.create');
     Route::post('/goals', [GoalController::class, 'store'])->name('goals.store');
+    Route::get('/goals/{goal}', [GoalController::class, 'show'])->name('goals.show');
+    Route::get('/goals/{goal}/preview', [GoalController::class, 'preview'])->name('goals.preview');
+    Route::post('/goals/{goal}/confirm', [GoalController::class, 'confirm'])->name('goals.confirm');
+    Route::delete('/goals/{goal}', [GoalController::class, 'destroy'])->name('goals.destroy');
+    Route::post('/goals/{goal}/pause', [GoalController::class, 'pause'])->name('goals.pause');
+    Route::post('/goals/{goal}/resume', [GoalController::class, 'resume'])->name('goals.resume');
 
     // Calendar connect
     Route::get('/calendar/connect', [GoogleCalendarController::class, 'connect'])
